@@ -10,22 +10,27 @@ nunjucks.configure('views', {
   watch: true
 })
 
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false })) // method post
 app.set('view engine', 'njk')
 
-const users = ['Diego Fernandes', 'Nicholas Ferrer', 'Maria Clara']
-
 app.get('/', (req, res) => {
-  return res.render('list', { users })
+  return res.render('age')
 })
 
-app.get('/new', (req, res) => {
-  return res.render('new')
+app.get('/major', (req, res) => {
+  return res.render('major')
 })
 
-app.post('/create', (req, res) => {
-  users.push(req.body.user)
-  return res.redirect('/')
+app.get('/minor', (req, res) => {
+  return res.render('minor')
+})
+
+app.post('/check', (req, res) => {
+  if (req.body.age >= 18) {
+    return res.redirect('/major')
+  } else {
+    return res.redirect('/minor')
+  }
 })
 
 app.listen(3000)
